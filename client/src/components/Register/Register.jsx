@@ -35,7 +35,7 @@ function Register() {
         console.log("registering..");
         try {
             const response = await userService.register({ username, password });
-            auth.loginWithJwt(response.headers["x-auth-token"]); //store the custom header in local storage which you get when you click register
+            //auth.loginWithJwt(response.headers["x-auth-token"]); //store the custom header in local storage which you get when you click register
             // this.props.history.push("/"); //redirect to home after registering
             window.location = "/";
         } catch (ex) {
@@ -75,11 +75,9 @@ function Register() {
                 label="Password"
                 variant="outlined"
             />
-            <Link to="/user-details" style={{ textDecoration: "none" }}>
-                <Button className={styles.button} variant="outlined">
-                    Register
-                </Button>
-            </Link>
+            <Button type="submit" className={styles.button} variant="outlined">
+                Register
+            </Button>
         </form>
     );
 }
