@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Button, TextField, withStyles } from "@material-ui/core/";
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
+import {auth,firestore} from "../../firebaseconfig"
 // import Joi from "joi";
-import auth from "../../services/authService";
+//import auth from "../../services/authService";
 // import { Redirect } from "react-router-dom";
-
 const InputField = withStyles({
     root: {
         "& label.Mui-focused": {
@@ -27,7 +27,13 @@ const InputField = withStyles({
         },
     },
 })(TextField);
-
+const signInWithEmailAndPasswordHandler = (email, password) => {
+    //event.preventDefault();
+    auth.signInWithEmailAndPassword(email, password).catch(error => {
+      //setError("Error signing in with password and email!");
+      console.error("Error signing in with password and email", error);
+    });
+  };
 const Login = (props) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -61,7 +67,8 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         console.log("logging in..");
         try {
-            auth.login(username, password);
+            //auth.login(username, password);
+            signInWithEmailAndPasswordHandler(username, password)
             const { state } = props.location;
             window.location = state ? state.from.pathname : "/";
             console.log("Logged in");
